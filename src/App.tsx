@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-import Header from './components/Header'
-import WeatherCard from './components/WeatherCard'
-import Forecast from './components/Forecast'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import WeatherCard from "./components/WeatherCard";
+import Forecast from "./components/Forecast";
+import Footer from "./components/Footer";
 
 type WeatherData = {
   name: string;
@@ -21,19 +21,33 @@ type WeatherData = {
 };
 
 function App() {
-  const [city, setCity] = useState('');
-  const [weather, setWeather] = useState<WeatherData | null>(null);  
+  const [city, setCity] = useState("");
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [error, setError] = useState("");
 
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
   useEffect(() => {
     if (!city) return;
-  
+
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
     )
-      .then((response) => response.json())
-      .then((data) => setWeather(data));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("City not found");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        setWeather(data);
+        setError("");
+      })
+      .catch(() => {
+        setWeather(null);
+        setError("City not found");
+      });
   }, [city]);
 
   return (
@@ -41,15 +55,17 @@ function App() {
       <h1>Whatever the Weather</h1>
       <p>Discover the weather. Experience the city.</p>
 
-          <Header setCity={setCity} />
+      <Header setCity={setCity} />
 
-          <WeatherCard weather={weather} />
+      <p>{error}</p>
 
-          <Forecast />
+      <WeatherCard weather={weather} />
 
-          <Footer />
+      <Forecast />
+
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
