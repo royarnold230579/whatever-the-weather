@@ -11,6 +11,7 @@ type ForecastItem = {
   };
   weather: {
     description: string;
+    icon: string;
   }[];
 };
 
@@ -21,19 +22,30 @@ function Forecast({ city }: ForecastProps) {
 
   useEffect(() => {
     if (!city) return;
-
+  
+    setForecast([]);
+  
     fetch(
       `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Forecast not found");
+        }
+  
+        return response.json();
+      })
       .then((data) => {
         const dailyForecasts = data.list
           .filter((item: ForecastItem) =>
             item.dt_txt.includes("12:00:00")
           )
           .slice(0, 5);
-
+  
         setForecast(dailyForecasts);
+      })
+      .catch(() => {
+        setForecast([]);
       });
   }, [city]);
 
@@ -52,6 +64,12 @@ function Forecast({ city }: ForecastProps) {
           return (
             <div className="forecast-card" key={item.dt_txt}>
               <p className="forecast-day">{day}</p>
+
+              <img
+                className="forecast-icon"
+                src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                alt={item.weather[0].description}
+              />
 
               <p className="forecast-temp">
                 {Math.round(item.main.temp)}°

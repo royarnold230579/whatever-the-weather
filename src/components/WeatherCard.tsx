@@ -7,6 +7,7 @@ type WeatherData = {
   };
   weather: {
     description: string;
+    icon: string;
   }[];
   wind: {
     speed: number;
@@ -23,19 +24,28 @@ function WeatherCard({ weather }: WeatherCardProps) {
   }
 
   return (
-    <section className="weather-card">
-      <div className="weather-main">
-        <div>
-          <h2>{weather.name}</h2>
-          <p className="weather-description">
-            {weather.weather[0].description}
-          </p>
-        </div>
+<section className="weather-card">
+  <div className="weather-main">
+    <div>
+      <h2>{weather.name}</h2>
 
-        <p className="temperature">
-          {Math.round(weather.main.temp)}°
-        </p>
-      </div>
+      <p className="weather-description">
+        {weather.weather[0].description}
+      </p>
+    </div>
+
+    <div className="weather-temperature">
+      <img
+        className="weather-icon"
+        src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+        alt={weather.weather[0].description}
+      />
+
+      <p className="temperature">
+        {Math.round(weather.main.temp)}°
+      </p>
+    </div>
+  </div>
 
       <div className="weather-details">
         <div className="weather-detail">

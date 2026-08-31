@@ -70,10 +70,45 @@ input {
 
 /* Application branding */
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
   color: white;
-  font-size: 1.2rem;
-  font-weight: 700;
   text-decoration: none;
+}
+
+/* Weather emblem */
+.logo-emblem {
+  width: 64px;
+  height: 64px;
+
+  object-fit: contain;
+}
+
+/* Brand name beside the emblem */
+.logo-text {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 1.15rem;
+  line-height: 1.05;
+}
+
+.logo-text strong {
+  font-weight: 700;
+  color: white;
+}
+
+/* Blue-purple accent taken from the logo artwork */
+.logo-text span {
+  font-weight: 700;
+
+  background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
 }
 
 /* Horizontal navigation links */
@@ -138,15 +173,14 @@ input {
   border-radius: 10px;
 
   color: white;
-  background: rgba(255, 255, 255, 0.18);
-
+  background: linear-gradient(135deg, #38bdf8, #8b5cf6);
   cursor: pointer;
 }
 
 /* Give the user visual feedback when hovering */
-.search-bar button:hover {
+/* .search-bar button:hover {
   background: rgba(255, 255, 255, 0.28);
-}
+} */
 
 
 /* =========================
@@ -201,6 +235,18 @@ input {
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
 
+.weather-temperature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weather-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
 /* City information and main temperature */
 .weather-main {
   display: flex;
@@ -219,8 +265,7 @@ input {
 /* Current weather description */
 .weather-description {
   margin: 8px 0 0;
-
-  color: rgba(255, 255, 255, 0.7);
+  color: #38bdf8;  
   text-transform: capitalize;
 }
 
@@ -309,8 +354,7 @@ input {
 
   font-size: 0.95rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
-}
+  color: #38bdf8;}
 
 .forecast-temp {
   margin: 16px 0 10px;
@@ -332,7 +376,34 @@ input {
    Footer
 ========================= */
 
-/* Footer styling will be added here */
+.footer {
+  width: min(900px, calc(100% - 48px));
+  margin: 48px auto 0;
+  padding: 24px 0 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: #38bdf8;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
 
 
 /* =========================
