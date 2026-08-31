@@ -24,12 +24,15 @@ function App() {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
   useEffect(() => {
     if (!city) return;
-
+  
+    setLoading(true);
+  
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
     )
@@ -37,7 +40,7 @@ function App() {
         if (!response.ok) {
           throw new Error("City not found");
         }
-
+  
         return response.json();
       })
       .then((data) => {
@@ -47,6 +50,9 @@ function App() {
       .catch(() => {
         setWeather(null);
         setError("City not found");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [city]);
 
@@ -57,9 +63,13 @@ function App() {
 
       <Header setCity={setCity} />
 
-      <p>{error}</p>
+      {loading && <p>Loading weather...</p>}
 
-      <WeatherCard weather={weather} />
+{error && <p>{error}</p>}
+
+{!loading && !error && weather && (
+  <WeatherCard weather={weather} />
+)}
 
       <Forecast />
 
