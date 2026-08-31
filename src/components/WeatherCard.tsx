@@ -1,6 +1,10 @@
-function WeatherCard() {
+type WeatherCardProps = {
+    city: string;
+  };
+
+function WeatherCard({ city }: WeatherCardProps) {
     return (
-        <h1>WeatherCard Component</h1>
+        <h1>{city}</h1>
     )
   }
   

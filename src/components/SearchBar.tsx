@@ -1,6 +1,16 @@
-function SearchBar() {
+import type { Dispatch, SetStateAction } from "react";
+
+type SearchBarProps = {
+    setCity: Dispatch<SetStateAction<string>>;
+  };
+
+function SearchBar({ setCity }: SearchBarProps) {
+
     return (
-        <h1>SearchBar Component</h1>
+        <div className="search-bar">
+            <input onChange={(event) => setCity(event.target.value)} type="text" placeholder="Search for a city..." />
+            <button>Search</button>        
+            </div>
     )
   }
   
