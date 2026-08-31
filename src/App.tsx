@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-import londonBackground from "./assets/city-backgrounds/London.jpg";
+
 
 import Header from "./components/Header";
 import WeatherCard from "./components/WeatherCard";
 import Forecast from "./components/Forecast";
 import Footer from "./components/Footer";
+
+const backgroundModules = import.meta.glob(
+  "./assets/city-backgrounds/*.jpg",
+  {
+    eager: true,
+    import: "default",
+  }
+);
 
 type WeatherData = {
   name: string;
@@ -28,6 +36,19 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+
+  const cityBackgrounds = Object.fromEntries(
+    Object.entries(backgroundModules).map(([path, image]) => {
+      const fileName = path.split("/").pop()?.replace(".jpg", "") ?? "";
+  
+      return [fileName, image as string];
+    })
+  );
+  
+  const backgroundImage =
+    weather && cityBackgrounds[weather.name]
+      ? cityBackgrounds[weather.name]
+      : cityBackgrounds["London"];
 
   useEffect(() => {
     if (!city) return;
@@ -63,7 +84,7 @@ function App() {
       style={{
         backgroundImage: `
           linear-gradient(rgba(8, 12, 20, 0.55), rgba(8, 12, 20, 0.7)),
-          url(${londonBackground})
+          url(${backgroundImage})
         `,
       }}
     >
