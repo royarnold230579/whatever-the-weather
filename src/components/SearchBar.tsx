@@ -1,24 +1,28 @@
 import { useState } from "react";
 
-import type { Dispatch, SetStateAction } from "react";
+import type {
+    Dispatch,
+    SetStateAction,
+    SyntheticEvent,
 
+  } from "react";
 type SearchBarProps = {
     setCity: Dispatch<SetStateAction<string>>;
   };
 
 function SearchBar({ setCity }: SearchBarProps) {
-    const handleSearch = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const handleSearch = (event: SyntheticEvent<HTMLFormElement>) => {event.preventDefault();
         const trimmedSearch = searchTerm.trim();
         if (trimmedSearch) {
           setCity(trimmedSearch);
         }
       };
-    const [searchTerm, setSearchTerm] = useState("");
     return (
-        <div className="search-bar">
-            <input onChange={(event) => setSearchTerm(event.target.value)} type="text" placeholder="Search for a city..." />
-            <button onClick={handleSearch}>Search</button>       
-            </div>
+<form className="search-bar" onSubmit={handleSearch}>            
+<input onChange={(event) => setSearchTerm(event.target.value)} type="text" placeholder="Search for a city..." />
+<button type="submit">Search</button>            
+</form>
     )
   }
   
