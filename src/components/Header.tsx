@@ -1,19 +1,17 @@
 import SearchBar from "./SearchBar";
 
 type HeaderProps = {
-    setCity: React.Dispatch<React.SetStateAction<string>>;
-  };
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+};
 
-  function Header({ setCity }: HeaderProps) {
+function Header({ setCity }: HeaderProps) {
   return (
-    <header>
+    <header className="header">
+      <a href="#" className="logo">
+        Whatever the Weather
+      </a>
 
-    <a href="#" className="logo"> Whatever the Weather
-</a>
-
-<SearchBar setCity={setCity} />
-
-      <nav>
+      <nav className="nav">
         <ul>
           <li>Home</li>
           <li>Forecast</li>
@@ -21,7 +19,7 @@ type HeaderProps = {
         </ul>
       </nav>
 
-      
+      <SearchBar setCity={setCity} />
     </header>
   );
 }

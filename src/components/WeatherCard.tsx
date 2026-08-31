@@ -19,18 +19,41 @@ type WeatherCardProps = {
 
 function WeatherCard({ weather }: WeatherCardProps) {
   if (!weather) {
-    return <p>Loading...</p>;
+    return null;
   }
 
   return (
-    <div>
-      <h2>{weather.name}</h2>
-      <p>Temperature: {weather.main.temp}°C</p>
-      <p>Feels like: {weather.main.feels_like}°C</p>
-      <p>Humidity: {weather.main.humidity}%</p>
-      <p>Description: {weather.weather[0].description}</p>
-      <p>Wind speed: {weather.wind.speed} m/s</p>
-    </div>
+    <section className="weather-card">
+      <div className="weather-main">
+        <div>
+          <h2>{weather.name}</h2>
+          <p className="weather-description">
+            {weather.weather[0].description}
+          </p>
+        </div>
+
+        <p className="temperature">
+          {Math.round(weather.main.temp)}°
+        </p>
+      </div>
+
+      <div className="weather-details">
+        <div className="weather-detail">
+          <span>Feels like</span>
+          <strong>{Math.round(weather.main.feels_like)}°C</strong>
+        </div>
+
+        <div className="weather-detail">
+          <span>Humidity</span>
+          <strong>{weather.main.humidity}%</strong>
+        </div>
+
+        <div className="weather-detail">
+          <span>Wind</span>
+          <strong>{weather.wind.speed} m/s</strong>
+        </div>
+      </div>
+    </section>
   );
 }
 
