@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import type { Dispatch, SetStateAction } from "react";
 
 type SearchBarProps = {
@@ -5,11 +7,11 @@ type SearchBarProps = {
   };
 
 function SearchBar({ setCity }: SearchBarProps) {
-
+    const [searchTerm, setSearchTerm] = useState("");
     return (
         <div className="search-bar">
-            <input onChange={(event) => setCity(event.target.value)} type="text" placeholder="Search for a city..." />
-            <button>Search</button>        
+            <input onChange={(event) => setSearchTerm(event.target.value)} type="text" placeholder="Search for a city..." />
+            <button onClick={() => setCity(searchTerm)}>Search</button>       
             </div>
     )
   }
