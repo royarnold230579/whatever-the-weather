@@ -102,7 +102,7 @@ function App() {
         <WeatherCard weather={weather} />
       )}
 
-      <Forecast />
+<Forecast city={city} />
 
       <Footer />
     </div>
