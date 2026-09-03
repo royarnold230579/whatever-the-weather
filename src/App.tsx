@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 
-
 import Header from "./components/Header";
 import WeatherCard from "./components/WeatherCard";
 import Forecast from "./components/Forecast";
 import Footer from "./components/Footer";
 
-const backgroundModules = import.meta.glob(
-  "./assets/city-backgrounds/*.jpg",
-  {
-    eager: true,
-    import: "default",
-  }
-);
+const backgroundModules = import.meta.glob("./assets/city-backgrounds/*.jpg", {
+  eager: true,
+  import: "default",
+});
 
 type WeatherData = {
   name: string;
@@ -41,11 +37,11 @@ function App() {
   const cityBackgrounds = Object.fromEntries(
     Object.entries(backgroundModules).map(([path, image]) => {
       const fileName = path.split("/").pop()?.replace(".jpg", "") ?? "";
-  
+
       return [fileName, image as string];
     })
   );
-  
+
   const backgroundImage =
     weather && cityBackgrounds[weather.name]
       ? cityBackgrounds[weather.name]
@@ -87,23 +83,21 @@ function App() {
           linear-gradient(rgba(8, 12, 20, 0.55), rgba(8, 12, 20, 0.7)),
           url(${backgroundImage})
         `,
-      }}
-    >
-      <section className="hero">
-  <h1>Whatever the Weather</h1>
-  <p>Discover the weather. Experience the city.</p>
-</section>
+      }}>
       <Header setCity={setCity} />
+
+      <section className="hero">
+        <h1>Whatever the Weather</h1>
+        <p>Discover the weather. Experience the city.</p>
+      </section>
 
       {loading && <p>Loading weather...</p>}
 
       {error && <p>{error}</p>}
 
-      {!loading && !error && weather && (
-        <WeatherCard weather={weather} />
-      )}
+      {!loading && !error && weather && <WeatherCard weather={weather} />}
 
-<Forecast city={city} />
+      <Forecast city={city} />
 
       <Footer />
     </div>
